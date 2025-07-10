@@ -1,0 +1,14 @@
+name: infra
+root: ~/para/professional/areas/home-lab/provider/infra
+
+windows:
+  - ansible:
+      layout: even-horizontal
+      panes:
+        - claude
+        - nvim
+  - tf:
+      layout: even-horizontal
+      panes:
+        - echo 'hello'
+        - nvim

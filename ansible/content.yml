@@ -1,0 +1,28 @@
+#!/usr/bin/env -S ansible-playbook -i localhost,
+---
+- name: Setup projects
+  hosts: localhost
+  connection: local
+  
+  vars:
+    para_path: "{{ ansible_user_dir }}/para"
+    para_areas_path: "{{ para_path }}/professional/areas"
+    # content_directories:
+    #   - "{{ ansible_user_dir }}/.config/tmuxinator"
+    repositories:
+      - repo: git@github.com:maxcole/provider-infra.git
+        dest: "{{ para_areas_path }}/home-lab/provider/infra"
+      - repo: git@github.com:maxcole/bootstrap.git
+        dest: "{{ para_areas_path }}/home-lab/provider/bootstrap"
+    #   - src: git@github.com:maxcole/config.git
+    #     dest: "{{ para_areas_path }}/config"
+    stow:
+      - src: "{{ playbook_dir }}/projects"
+        dest: "{{ ansible_user_dir }}"
+        packages: [infra]
+  
+  tasks:
+    - include_role:
+        name: rjayroach.common.content
+      tags: [user-install]
+
