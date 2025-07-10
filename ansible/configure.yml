@@ -22,9 +22,9 @@
       - repo: git@github.com:maxcole/bootstrap.git
         dest: "{{ para_areas_path }}/home-lab/provider/bootstrap"
       - repo: git@github.com:maxcole/config.git
-        dest: "{{ para_areas_path }}/config"
+        dest: "{{ para_areas_path }}/home-lab/provider/config"
       - repo: git@github.com:maxcole/packer.git
-        dest: "{{ para_areas_path }}/packer"
+        dest: "{{ para_areas_path }}/home-lab/provider/packer"
     stow:
       - src: "{{ playbook_dir }}"
         dest: "{{ ansible_user_dir }}"
