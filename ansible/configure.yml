@@ -5,6 +5,8 @@
   connection: "{{ target_connection | default('local') }}"
   become: yes
   become_user: "{{ target_user | default(lookup('env', 'USER')) }}"
+  vars_files:
+    - secrets.enc
   vars:
     ansible_pipelining: true
     allow_world_readable_tmpfiles: true
@@ -19,10 +21,12 @@
         dest: "{{ para_areas_path }}/home-lab/provider/infra"
       - repo: git@github.com:maxcole/bootstrap.git
         dest: "{{ para_areas_path }}/home-lab/provider/bootstrap"
-    #   - src: git@github.com:maxcole/config.git
-    #     dest: "{{ para_areas_path }}/config"
+      - repo: git@github.com:maxcole/config.git
+        dest: "{{ para_areas_path }}/config"
+      - repo: git@github.com:maxcole/packer.git
+        dest: "{{ para_areas_path }}/packer"
     stow:
-      - src: "{{ playbook_dir }}/projects"
+      - src: "{{ playbook_dir }}"
         dest: "{{ ansible_user_dir }}"
         packages: [dotfiles]
   
