@@ -1,4 +1,4 @@
-#!/usr/bin/env -S ansible-playbook -i localhost, -t noop
+#!/usr/bin/env -S ansible-playbook -i localhost, -t noop --vault-password-file secrets.pwd
 #!/usr/bin/env -S ansible-playbook -i inventory.yml -t host-install,user-config -e @secrets.enc --vault-password-file secrets.pwd
 ---
 - name: Setup Projects
