@@ -1,0 +1,45 @@
+#!/usr/bin/env -S ansible-playbook -i localhost, -t noop
+---
+- name: Setup Projects
+  hosts: "{{ target_hosts | default('localhost') }}"
+  connection: "{{ target_connection | default('local') }}"
+  become: yes
+  become_user: "{{ target_user | default(lookup('env', 'USER')) }}"
+  vars_files:
+    - secrets.enc
+  vars:
+    ansible_pipelining: true
+    allow_world_readable_tmpfiles: true
+  
+    para_path: "{{ ansible_user_dir }}/para"
+    para_areas_path: "{{ para_path }}/professional/areas"
+    content_directories:
+      - "{{ ansible_user_dir }}/.aws"
+      - "{{ ansible_user_dir }}/.ssh"
+      - "{{ ansible_user_dir }}/.local/share/python"
+    repositories:
+      - repo: git@github.com:maxcole/provider-infra.git
+        dest: "{{ para_areas_path }}/rws/infra"
+      - repo: git@github.com:maxcole/bootstrap.git
+        dest: "{{ para_areas_path }}/rws/bootstrap"
+      - repo: git@github.com:maxcole/config.git
+        dest: "{{ para_areas_path }}/rws/config"
+      - repo: git@github.com:maxcole/packer.git
+        dest: "{{ para_areas_path }}/rws/packer"
+    stow:
+      - src: "{{ playbook_dir }}"
+        dest: "{{ ansible_user_dir }}"
+        packages: [dotfiles]
+    secrets:
+      - file: "{{ playbook_dir }}/secrets.enc"
+        var: "{{ _secrets }}"
+  
+  tasks:
+    - ansible.builtin.debug:
+        var: "{{ item }}"
+      loop: [ansible_env, ansible_user_id, ansible_user_dir]
+      tags: [debug]
+
+    - include_role:
+        name: rjayroach.common.content
+      tags: [debug, user-install]

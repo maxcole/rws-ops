@@ -1,5 +1,5 @@
 name: infra
-root: ~/para/professional/areas/home-lab/provider/infra
+root: ~/para/professional/areas/rws/infra
 
 windows:
   - ansible:

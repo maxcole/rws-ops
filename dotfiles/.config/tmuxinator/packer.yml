@@ -1,36 +1,36 @@
 # ~/.config/tmuxinator/packer.yml
 
 name: packer
-root: ~/dev/ops/packer
+root: ~/para/professional/areas/rws/packer
 
 windows:
   - packer:
       layout: even-horizontal
-      root: ~/dev/ops/packer
+      root: ~/para/professional/areas/rws/packer
       panes:
         - nvim
         - 
   - vars:
       layout: even-horizontal
-      root: ~/dev/ops/packer/vars
+      root: ~/para/professional/areas/rws/packer/vars
       panes:
         - nvim
         - 
   - builds:
       layout: even-horizontal
-      root: ~/dev/ops/packer/builds/base
+      root: ~/para/professional/areas/rws/packer/builds/base
       panes:
         - nvim
         - 
   - builders:
       layout: even-horizontal
-      root: ~/dev/ops/packer/builders/proxmox-iso
+      root: ~/para/professional/areas/rws/packer/builders/proxmox-iso
       panes:
         - nvim
         - 
   - distros:
       layout: even-horizontal
-      root: ~/dev/ops/packer/distros/debian/bookworm
+      root: ~/para/professional/areas/rws/packer/distros/debian/bookworm
       panes:
         - nvim
         - 
