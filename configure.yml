@@ -17,6 +17,7 @@
       - "{{ ansible_user_dir }}/.aws"
       - "{{ ansible_user_dir }}/.ssh"
       - "{{ ansible_user_dir }}/.local/share/python"
+      - "{{ ansible_user_dir }}/.config/zsh-ext"
     repositories:
       - repo: git@github.com:maxcole/provider-infra.git
         dest: "{{ para_areas_path }}/rws/infra"
