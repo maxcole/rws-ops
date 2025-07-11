@@ -1,5 +1,4 @@
 #!/usr/bin/env -S ansible-playbook -i localhost, -t noop --vault-password-file secrets.pwd
-#!/usr/bin/env -S ansible-playbook -i inventory.yml -t host-install,user-config -e @secrets.enc --vault-password-file secrets.pwd
 ---
 - name: Setup Projects
   hosts: "{{ target_hosts | default('localhost') }}"
@@ -40,3 +39,19 @@
     - include_role:
         name: rjayroach.common.content
       tags: [debug, user-install]
+
+    - name: Create symlink to rjayroach.common collection roles
+      ansible.builtin.file:
+        src: "/usr/share/ansible/collections/ansible_collections/rjayroach/common/roles"
+        dest: "{{ playbook_dir | dirname }}/roles"
+        state: link
+        force: yes
+      tags: [user-install]
+
+    - name: Create symlink to rjayroach.common collection playbooks
+      ansible.builtin.file:
+        src: "/usr/share/ansible/collections/ansible_collections/rjayroach/common/playbooks"
+        dest: "{{ playbook_dir | dirname }}/playbooks"
+        state: link
+        force: yes
+      tags: [user-install]
