@@ -19,10 +19,10 @@
       - "{{ ansible_user_dir }}/.local/share/python"
       - "{{ ansible_user_dir }}/.config/zsh-ext"
     repositories:
-      - repo: git@github.com:maxcole/rws-infra.git
-        dest: "{{ para_areas_path }}/rws/infra"
       - repo: git@github.com:maxcole/rws-bootstrap.git
         dest: "{{ para_areas_path }}/rws/bootstrap"
+      - repo: git@github.com:maxcole/rws-infra.git
+        dest: "{{ para_areas_path }}/rws/infra"
       - repo: git@github.com:maxcole/rws-utils.git
         dest: "{{ para_areas_path }}/rws/utils"
     stow:
