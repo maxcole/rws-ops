@@ -1,18 +1,17 @@
-#!/usr/bin/env -S ansible-playbook -i localhost, -t noop --vault-password-file secrets.pwd
+#!/usr/bin/env -S ansible-playbook -i localhost, --vault-password-file ansible-vault.key
 ---
 - name: Setup Projects
   hosts: "{{ target_hosts | default('localhost') }}"
-  connection: "{{ target_connection | default('local') }}"
-  become: yes
-  become_user: "{{ target_user | default(lookup('env', 'USER')) }}"
+  # connection: "{{ target_connection | default('local') }}"
+  # become: yes
+  # become_user: "{{ target_user | default(lookup('env', 'USER')) }}"
   vars_files:
     - secrets.enc
   vars:
     ansible_pipelining: true
     allow_world_readable_tmpfiles: true
   
-    para_path: "{{ ansible_user_dir }}/para"
-    para_areas_path: "{{ para_path }}/professional/areas"
+    para_path: "{{ ansible_user_dir }}/rws"
     content_directories:
       - "{{ ansible_user_dir }}/.aws"
       - "{{ ansible_user_dir }}/.ssh"
@@ -20,11 +19,11 @@
       - "{{ ansible_user_dir }}/.config/zsh-ext"
     repositories:
       - repo: git@github.com:maxcole/rws-bootstrap.git
-        dest: "{{ para_areas_path }}/rws/bootstrap"
+        dest: "{{ para_path }}/bootstrap"
       - repo: git@github.com:maxcole/rws-infra.git
-        dest: "{{ para_areas_path }}/rws/infra"
+        dest: "{{ para_path }}/infra"
       - repo: git@github.com:maxcole/rws-utils.git
-        dest: "{{ para_areas_path }}/rws/utils"
+        dest: "{{ para_path }}/utils"
     stow:
       - src: "{{ playbook_dir }}"
         dest: "{{ ansible_user_dir }}"
@@ -34,6 +33,10 @@
         var: "{{ _secrets }}"
   
   tasks:
+    - debug:
+        var: repositories
+    - debug:
+        var: _secrets
     - include_role:
-        name: rjayroach.common.content
-      tags: [debug, user-install]
+        name: pcs.user.content
+      # tags: [user-install]
