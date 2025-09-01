@@ -13,7 +13,7 @@ This repository contains the bootstrap script which initializes the RWS reposito
 ## Usage
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/maxcole/rjayroach-ops/refs/heads/main/bootstrap.sh | bash -s --
+curl -sSL https://raw.githubusercontent.com/maxcole/rws-ops/refs/heads/main/bootstrap.sh | bash -s --
 ```
 
 Create the secrets.pwd
