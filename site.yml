@@ -1,15 +1,13 @@
-#!/usr/bin/env -S ansible-playbook -i localhost, --vault-password-file ansible-vault.key
+#!/usr/bin/env -S ansible-playbook -i localhost, # --vault-password-file ansible-vault.key
 ---
 - name: Setup Projects
-  hosts: "{{ target_hosts | default('localhost') }}"
-  # connection: "{{ target_connection | default('local') }}"
-  # become: yes
-  # become_user: "{{ target_user | default(lookup('env', 'USER')) }}"
-  vars_files:
-    - secrets.enc
+  hosts: localhost
+  # vars_files:
+  #   - secrets.enc
   vars:
-    ansible_pipelining: true
-    allow_world_readable_tmpfiles: true
+    # ansible_pipelining: true
+    # allow_world_readable_tmpfiles: true
+
   
     para_path: "{{ ansible_user_dir }}/rws"
     content_directories:
@@ -24,19 +22,14 @@
         dest: "{{ para_path }}/infra"
       - repo: git@github.com:maxcole/rws-utils.git
         dest: "{{ para_path }}/utils"
-    stow:
-      - src: "{{ playbook_dir }}"
-        dest: "{{ ansible_user_dir }}"
-        packages: [dotfiles]
-    secrets:
-      - file: "{{ playbook_dir }}/secrets.enc"
-        var: "{{ _secrets }}"
+    # stow:
+    #   - src: "{{ playbook_dir }}"
+    #     dest: "{{ ansible_user_dir }}"
+    #     packages: [dotfiles]
+    # secrets:
+    #   - file: "{{ playbook_dir }}/secrets.enc"
+    #     var: "{{ _secrets }}"
   
   tasks:
-    - debug:
-        var: repositories
-    - debug:
-        var: _secrets
     - include_role:
         name: pcs.user.content
-      # tags: [user-install]
